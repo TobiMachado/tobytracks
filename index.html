@@ -1816,29 +1816,16 @@
   }
   if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
 
-  // ── LANGUAGE SYSTEM ──
-  var lang = 'en';
-  try { lang = localStorage.getItem('tt-lang') || 'en'; } catch(e) {}
-
-  function applyLang(l) {
-    document.querySelectorAll('[data-en]').forEach(function(el) {
-      // Skip elements that have child ELEMENTS (only update leaf text nodes)
-      if (el.children.length > 0) return;
-      el.textContent = l === 'en' ? el.dataset.en : el.dataset.es;
-    });
-    var dawT = document.getElementById('dawTitle');
-    if (dawT) dawT.innerHTML = l === 'en' ? 'Use it in your<br>favorite <span style="color:var(--cream)">DAW</span>' : 'Usalo en tu<br><span style="color:var(--cream)">DAW</span> favorito';
-    document.getElementById('langBtn').textContent = l === 'en' ? 'ES' : 'EN';
-  }
-
-  // Apply saved lang on load
-  if (lang === 'es') applyLang('es');
-
   const langBtn = document.getElementById('langBtn');
   langBtn.addEventListener('click', () => {
     lang = lang === 'en' ? 'es' : 'en';
-    try { localStorage.setItem('tt-lang', lang); } catch(e) {}
-    applyLang(lang);
+    langBtn.textContent = lang === 'en' ? 'ES' : 'EN';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.es;
+    });
+    // DAW title has a <br> so use innerHTML
+    var dawT = document.getElementById('dawTitle');
+    if (dawT) dawT.innerHTML = lang === 'en' ? 'Use it in your<br>favorite <span style="color:var(--cream)">DAW</span>' : 'Usalo en tu<br><span style="color:var(--cream)">DAW</span> favorito';
   });
 </script>
 
