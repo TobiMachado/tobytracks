@@ -1822,6 +1822,8 @@
 
   function applyLang(l) {
     document.querySelectorAll('[data-en]').forEach(function(el) {
+      // Skip elements that have child ELEMENTS (only update leaf text nodes)
+      if (el.children.length > 0) return;
       el.textContent = l === 'en' ? el.dataset.en : el.dataset.es;
     });
     var dawT = document.getElementById('dawTitle');
