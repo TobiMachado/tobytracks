@@ -356,7 +356,7 @@
     flex-direction: column;
     gap: 20px;
     position: relative;
-    transition: transform 0.25s ease, border-color 0.25s;
+    transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.3s ease;
     cursor: pointer;
     flex: 1 1 220px;
     min-width: 200px;
@@ -366,9 +366,12 @@
   }
 
   .tier-card:hover {
-    border-color: rgba(232,224,208,0.3);
+    border-color: rgba(255,255,255,0.35);
     transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+    box-shadow:
+      0 16px 36px rgba(0,0,0,0.5),
+      0 0 40px 8px rgba(255,255,255,0.07),
+      0 0 0 1px rgba(255,255,255,0.12);
   }
 
   .tier-card.featured {
@@ -379,6 +382,10 @@
   .tier-card.featured:hover {
     border-color: var(--cream);
     transform: translateY(-6px);
+    box-shadow:
+      0 16px 36px rgba(0,0,0,0.5),
+      0 0 48px 12px rgba(232,224,160,0.13),
+      0 0 0 1px rgba(232,224,160,0.25);
   }
 
   .tier-badge {
@@ -492,7 +499,33 @@
 
 
   /* ── ARTISTS ── */
-  #artists { background: var(--bg); }
+  #artists {
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  #artists::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,224,208,0.055) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(232,224,208,0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #artists::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #artists > * { position: relative; z-index: 1; }
 
   .artists-grid {
     display: grid;
@@ -987,7 +1020,7 @@
     background: var(--card);
     border: 1px solid var(--border);
     padding: 28px;
-    transition: transform 0.25s ease, border-color 0.25s;
+    transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.3s ease;
     cursor: default;
   }
 
