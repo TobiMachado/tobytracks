@@ -572,6 +572,21 @@
   .btn-add-cart svg { width: 14px; height: 14px; flex-shrink: 0; }
 
   /* ── CART ICON ── */
+  .lang-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: var(--font);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    opacity: 0.7;
+  }
+  .lang-toggle:hover { opacity: 1; border-color: var(--cream); color: var(--white); }
+
   .cart-btn {
     position: relative;
     background: none;
@@ -784,6 +799,7 @@
     <a href="index.html">Home</a>
     <a href="index.html#store">Membership</a>
     <a href="store.html" class="active">Store</a>
+    <button class="lang-toggle" id="langBtn">ES</button>
     <button class="cart-btn" id="cartBtn" onclick="openCart()" aria-label="Cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
@@ -1210,4 +1226,24 @@
 
   // ESC to close
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+
+  // ── LANGUAGE SYSTEM ──
+  var lang = 'en';
+  try { lang = localStorage.getItem('tt-lang') || 'en'; } catch(e) {}
+
+  function applyLang(l) {
+    document.querySelectorAll('[data-en]').forEach(function(el) {
+      el.textContent = l === 'en' ? el.dataset.en : el.dataset.es;
+    });
+    document.getElementById('langBtn').textContent = l === 'en' ? 'ES' : 'EN';
+  }
+
+  // Apply saved lang on load
+  if (lang === 'es') applyLang('es');
+
+  document.getElementById('langBtn').addEventListener('click', function() {
+    lang = lang === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('tt-lang', lang); } catch(e) {}
+    applyLang(lang);
+  });
 </script>
